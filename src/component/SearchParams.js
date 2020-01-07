@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Client } from "@petfinder/petfinder-js";
+import Results from "./Results";
 // import useDropdown from "./UseDropdown";
 
 const client = new Client({
@@ -15,6 +16,20 @@ const SearchParams = () => {
   // const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   const [animal, updateAnimal] = useState("dog");
   const [breed, updateBreed] = useState("");
+  const [pets, setPets] = useState([]);
+
+  async function requestPets() {
+    await client.animal
+      .search({
+        location,
+        breed,
+        type: animal
+      })
+      .then(resp => {
+        console.log(resp.data.animals);
+        setPets(resp.data.animals || []);
+      });
+  }
 
   useEffect(() => {
     setBreeds([]);
@@ -33,7 +48,12 @@ const SearchParams = () => {
 
   return (
     <div className="search-params">
-      <form>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor="location">
           Location
           <input
@@ -78,6 +98,7 @@ const SearchParams = () => {
         </label>
         <button>Submit</button>
       </form>
+      <Results pets={pets} />
     </div>
   );
 };
