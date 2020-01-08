@@ -1,6 +1,7 @@
 import React from "react";
 import { Client } from "@petfinder/petfinder-js";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
 
 const client = new Client({
   apiKey: process.env.API_KEY,
@@ -8,7 +9,7 @@ const client = new Client({
 });
 
 class Details extends React.Component {
-  state = { loading: true };
+  state = { loading: true, redirect: false };
 
   componentDidMount() {
     client.animal
@@ -27,6 +28,7 @@ class Details extends React.Component {
       })
       .catch(err => this.setState({ error: err }));
   }
+
   render() {
     if (this.state.loading) {
       return <h1>loading … </h1>;
@@ -48,4 +50,10 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default function DetailsErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
