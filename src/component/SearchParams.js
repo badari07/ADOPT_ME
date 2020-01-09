@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Client } from "@petfinder/petfinder-js";
 import Results from "./Results";
 // import useDropdown from "./UseDropdown";
+import ThemeContext from "./ThemeContext";
 
 const client = new Client({
   apiKey: process.env.API_KEY,
@@ -17,18 +18,21 @@ const SearchParams = () => {
   const [animal, updateAnimal] = useState("dog");
   const [breed, updateBreed] = useState("");
   const [pets, setPets] = useState([]);
+  const [theme] = useContext(ThemeContext);
 
   async function requestPets() {
-    await client.animal
-      .search({
-        location,
-        breed,
-        type: animal
-      })
-      .then(resp => {
-        console.log(resp.data.animals);
-        setPets(resp.data.animals || []);
-      });
+    const { data } = await client.animal.search({
+      location,
+      breed,
+      type: animal
+    });
+    // .then(resp => {
+    //   setPets(resp.data.animals || []);
+    // });
+
+    setPets(data.animals || []);
+
+    // console.log("animals", data.animals);
   }
 
   useEffect(() => {
@@ -96,7 +100,7 @@ const SearchParams = () => {
             ))}
           </select>
         </label>
-        <button>Submit</button>
+        <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
       <Results pets={pets} />
     </div>
