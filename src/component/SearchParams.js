@@ -15,10 +15,10 @@ const SearchParams = () => {
   const [breeds, setBreeds] = useState([]);
   // const [animal, AnimalDropdown] = useDropdown("Animal", "dog", Animals);
   // const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
-  const [animal, updateAnimal] = useState("dog");
+  const [animal, updateAnimal] = useState("Dog");
   const [breed, updateBreed] = useState("");
   const [pets, setPets] = useState([]);
-  const [theme] = useContext(ThemeContext);
+  const [theme, setTheme] = useContext(ThemeContext);
 
   async function requestPets() {
     const { data } = await client.animal.search({
@@ -39,10 +39,12 @@ const SearchParams = () => {
     setBreeds([]);
     updateBreed("");
 
-    client.animalData.breeds(animal).then(resp => {
-      let breeds = resp.data.breeds;
-      setBreeds(breeds);
-    });
+    if (animal) {
+      client.animalData.breeds(animal).then(resp => {
+        let breeds = resp.data.breeds;
+        setBreeds(breeds);
+      });
+    }
 
     client.animalData.types().then(resp => {
       let Animals = resp.data.types.map(type => type.name);
@@ -98,6 +100,19 @@ const SearchParams = () => {
                 {breed.name}
               </option>
             ))}
+          </select>
+        </label>
+        <label htmlFor="location">
+          Theme
+          <select
+            value={theme}
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}
+          >
+            <option value="peru">Peru</option>
+            <option value="darkblue">Dark Blue</option>
+            <option value="chartreuse">Chartreuse</option>
+            <option value="mediumorchid">Medium Orchid</option>
           </select>
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
