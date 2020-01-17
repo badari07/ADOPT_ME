@@ -1,10 +1,12 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Client } from "@petfinder/petfinder-js";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import { navigate } from "@reach/router";
-import Modal from "./Modal";
+// import Modal from "./Modal";
+
+const Modal = lazy(() => import("./Modal"));
 
 const client = new Client({
   apiKey: process.env.API_KEY,
