@@ -18,6 +18,9 @@
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
+    "@types/reach__router": "^1.2.6",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.5",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
@@ -26,13 +29,15 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "parcel-bundler": "^1.12.4",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "@babel/node": "^7.8.3",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@emotion/core": "^10.0.27",
     "@emotion/styled-base": "^10.0.27",
+    "@frontendmasters/pet": "^1.0.3",
     "@petfinder/petfinder-js": "^1.0.6",
     "@reach/router": "^1.2.1",
     "babel-cli": "^6.26.0",
